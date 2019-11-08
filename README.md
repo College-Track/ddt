@@ -3,7 +3,32 @@ Development Data Tool
 
 A collection of scripts to automate the generation and updating of the Development Data Tool.
 
-Project Organization
+### Prerequisites
+
+```
+python 3.7
+conda 4.7.12
+```
+
+
+### Installing
+
+```
+conda env create -f environment.yml
+conda activate ddt
+```
+
+Create a `.env` file in the root of the project and insert your key/value pairs in the following format of KEY=VALUE:
+
+```
+SF_TOKEN=<your salesforce token>
+SF_USERNAME=<your salesforce username>
+SF_PASS=<your salesforce password>
+```
+
+
+
+### Project Organization
 ------------
 
     ├── LICENSE
@@ -31,7 +56,10 @@ Project Organization
     │   ├── __init__.py    <- Makes src a Python module
     │   │
     │   ├── data           <- Scripts to download, generate, or clean data
-    │   │   └── make_dataset.py
+    │   │   └── load_data.py <- functions to load data from Salesforce
+    |   |   |
+    |   |   └── prep_data.py <- function to clean/prep data 
+    |   |
     │   │
     │   ├── helpers       <- Scripts to turn raw data into features for modeling
     │   │   └── helpers.py
@@ -40,7 +68,6 @@ Project Organization
     │   └── visualization  <- Scripts to create exploratory and results oriented visualizations
     │       └── visualize.py
     │
-    └── tox.ini            <- tox file with settings for running tox; see tox.testrun.org
 
 
 --------

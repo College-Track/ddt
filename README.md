@@ -12,11 +12,12 @@ conda 4.7.12
 
 
 ### Installing
-
+* For any time after initial install just run the second command
 ```
 conda env create -f environment.yml
 conda activate ddt
 ```
+
 
 Create a `.env` file in the root of the project and insert your key/value pairs in the following format of KEY=VALUE:
 

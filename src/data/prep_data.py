@@ -12,15 +12,15 @@ interim_data = Path(".") / "data" / "interim"
 
 def update_site_name(df, SITES):
     """
-    Adds a column to df with appriopriate site's abreviation. 
+    Adds a column to df with appriopriate site's abreviation.
     If site is in df, but not SITES, will add full site name to new column.
     """
     df["site_short"] = ""
     for site in SITES:
-        if df.Site.isin([site["sf_name"]]).any():
-            df.loc[df.Site == site["sf_name"], "site_short"] = site["short_name"]
+        if df.Site.isin(site.sf_name).any():
+            df.loc[df.Site == site.sf_name, "site_short"] = site.short_name
         else:
-            df.loc[df.Site == site["sf_name"], "site_short"] = site["sf_name"]
+            df.loc[df.Site == site.sf_name, "site_short"] = site.sf_name
     return df
 
 # a JSON formatted list with details on each data file to load

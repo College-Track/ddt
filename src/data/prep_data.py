@@ -17,7 +17,7 @@ def update_site_name(df, SITES):
     """
     df["site_short"] = ""
     for site in SITES:
-        if df.Site.isin(site.sf_name).any():
+        if (df.Site == site.sf_name).any():
             df.loc[df.Site == site.sf_name, "site_short"] = site.short_name
         else:
             df.loc[df.Site == site.sf_name, "site_short"] = site.sf_name

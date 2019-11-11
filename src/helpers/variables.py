@@ -1,4 +1,4 @@
-from classes import Site, Region
+from src.helpers.classes import Site, Region
 
 SITES = list()
 REGIONS = list()

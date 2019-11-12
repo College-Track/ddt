@@ -12,21 +12,35 @@ conda 4.7.12
 
 
 ### Installing
+Clone the repository and switch to the created ddt directory
+```
+git clone https://github.com/College-Track/ddt
+cd ddt
+```
+
 * For any time after initial install just run the second command
 ```
 conda env create -f environment.yml
 conda activate ddt
 ```
 
+Copy the example .env file
+```
+cp .env.example .env
+```
 
-Create a `.env` file in the root of the project and insert your key/value pairs in the following format of KEY=VALUE:
-
+Make sure you update the following values in the newly created .env
 ```
 SF_TOKEN=<your salesforce token>
 SF_USERNAME=<your salesforce username>
 SF_PASS=<your salesforce password>
 ```
 
+### Run scripts
+
+``` 
+python3 src/main.py
+```
 
 
 ### Project Organization

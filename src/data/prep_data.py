@@ -18,13 +18,11 @@ def update_site_name(df, SITES):
     If site is in df, but not SITES, will add full site name to new column.
     """
     df["site_short"] = ""
-    for site in SITES.keys():
-        if (df.Site == SITES[site].sf_name).any():
-            df.loc[df.Site == SITES[site].sf_name, "site_short"] = SITES[
-                site
-            ].short_name
+    for site in SITES.values():
+        if (df.Site == site.sf_name).any():
+            df.loc[df.Site == site.sf_name, "site_short"] = site.short_name
         else:
-            df.loc[df.Site == SITES[site].sf_name, "site_short"] = SITES[site].sf_name
+            df.loc[df.Site == site.sf_name, "site_short"] = site.sf_name
     return df
 
 

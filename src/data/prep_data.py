@@ -1,9 +1,11 @@
 import pandas as pd
 from pathlib import Path
 from dotenv import load_dotenv
-from src.helpers.variables import SITES
+from src.helpers.helpers import generate_sites
 
 load_dotenv()
+
+SITES = generate_sites()
 
 # Setup paths for reading and writing files
 raw_data = Path(".") / "data" / "raw"
@@ -16,12 +18,15 @@ def update_site_name(df, SITES):
     If site is in df, but not SITES, will add full site name to new column.
     """
     df["site_short"] = ""
-    for site in SITES:
-        if (df.Site == site.sf_name).any():
-            df.loc[df.Site == site.sf_name, "site_short"] = site.short_name
+    for site in SITES.keys():
+        if (df.Site == SITES[site].sf_name).any():
+            df.loc[df.Site == SITES[site].sf_name, "site_short"] = SITES[
+                site
+            ].short_name
         else:
-            df.loc[df.Site == site.sf_name, "site_short"] = site.sf_name
+            df.loc[df.Site == SITES[site].sf_name, "site_short"] = SITES[site].sf_name
     return df
+
 
 # a JSON formatted list with details on each data file to load
 data_files = [
@@ -30,6 +35,7 @@ data_files = [
         "raw_file": "student_count_demo_11_7_2019.csv",
         "df": "",
         "interim_file": "count_demographics_interim.pkl",
+        "test_file": "count_demographics_interim.csv",
     }
 ]
 
@@ -44,5 +50,6 @@ for file in data_files:
 
     file["df"] = update_site_name(file["df"], SITES)
     file["df"].to_pickle(interim_data.joinpath(file["interim_file"]))
+    file["df"].to_csv(interim_data.joinpath(file["test_file"]))
     sites.to_pickle(interim_data.joinpath("sites.pkl"))
 

@@ -9,13 +9,13 @@ class Site:
     short_name: str
 
 
-@dataclass(frozen=True)
+@dataclass()
 class Region:
-    __slots__ = ["region_long", "region_short", "sites_long", "sites_short"]
+    __slots__ = ["region_long", "region_short"]
     region_long: str
     region_short: str
-    sites_long: List
-    sites_short: List
+    sites = []
+
 
 
 

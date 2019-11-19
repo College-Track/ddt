@@ -8,7 +8,7 @@ def generate_sites():
     The dictionary is instantiated in the Site class
     """
     _pgc = Site("College Track at The Durant Center", "PGC")
-    # _ward_8 = Site("College Track Ward 8", "WARD 8")
+    _ward_8 = Site("College Track Ward 8", "WARD 8")
     _watts = Site("College Track Watts", "WATTS")
     _boyle_heights = Site("College Track Boyle Heights", "BH")
     _nola = Site("College Track New Orleans", "NOLA")

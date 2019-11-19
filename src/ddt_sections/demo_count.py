@@ -12,7 +12,10 @@ df = pd.read_pickle(interim_data)
 
 
 def create_pivot_table(df, type):
-    """Indicates what type of pivot table to create"""
+    """
+    Indicates what type of pivot table to create
+    type: what your second pivot indicator will be, ex first gen or gender
+    """
     pivot_table = pd.pivot_table(
         df,
         index=["Contact Record Type", type],
@@ -25,12 +28,14 @@ def create_pivot_table(df, type):
     return pivot_table
 
 
-# TODO: Determine how to manage sites that aren't in dataframe
 def calculate_region_totals(df, REGIONS):
     for region in REGIONS:
         df[region.region_short] = 0
         _sites = [site.short_name for site in region.sites]
-        df[region.region_short] = df[_sites].sum(axis=1)
+        # removing sites which are instantiated, but no data exist yet
+        _sites_complete = [site for site in _sites if site in df.columns]
+
+        df[region.region_short] = df[_sites_complete].sum(axis=1)
 
     return df
 
@@ -45,7 +50,7 @@ gender_pivot = calculate_region_totals(gender_pivot, REGIONS)
 race_pivot = calculate_region_totals(race_pivot, REGIONS)
 
 
-# print(first_gen_pivot)
+print(first_gen_pivot)
 
 # print(gender_pivot)
 

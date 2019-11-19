@@ -25,20 +25,28 @@ def create_pivot_table(df, type):
         fill_value=0,
         margins=True,
     )
+    pivot_table = pivot_table.drop('All', axis=1)
     return pivot_table
 
 
 def calculate_region_totals(df, REGIONS):
+    """Calculates the regional totals for each measure in the given data frame."""
     for region in REGIONS:
         df[region.region_short] = 0
         _sites = [site.short_name for site in region.sites]
         # removing sites which are instantiated, but no data exist yet
-        _sites_complete = [site for site in _sites if site in df.columns]
+        _sites_complete = [site for site in _sites if site in list(df.columns)]
 
         df[region.region_short] = df[_sites_complete].sum(axis=1)
 
     return df
 
+# TODO: Currently is in active, need to have a better solution
+def add_subtotals(df):
+    tmp_df = df.sum(level=1, axis=0)
+    tmp_df.name = "Totals"
+    
+    return df.append(tmp_df)
 
 first_gen_pivot = create_pivot_table(df, "Indicator: First Generation")
 gender_pivot = create_pivot_table(df, "Gender")
@@ -49,8 +57,13 @@ first_gen_pivot = calculate_region_totals(first_gen_pivot, REGIONS)
 gender_pivot = calculate_region_totals(gender_pivot, REGIONS)
 race_pivot = calculate_region_totals(race_pivot, REGIONS)
 
+first_gen_totals = first_gen_pivot.sum(level=1, axis=0)
+gender_totals = gender_pivot.sum(level=1, axis=0)
+race_totals = race_pivot.sum(level=1, axis=0)
 
-print(first_gen_pivot)
+
+
+# print(first_gen_pivot)
 
 # print(gender_pivot)
 

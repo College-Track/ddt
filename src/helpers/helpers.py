@@ -29,7 +29,7 @@ def generate_regions(SITES):
     The list lives on the Region class.
     """
     _nor_cal = Region("Northern California", "Nor Cal")
-    _nola_region = Region("New Orleans", "NOLA")
+    # _nola_region = Region("New Orleans", "NOLA")
     _east_coast = Region("East Coast", "East Coast")
     _bay_area = Region("Bay Area", "Bay Area")
     _la_region = Region("Lost Angeles", "LA")
@@ -37,7 +37,7 @@ def generate_regions(SITES):
     _national = Region("National", "National")
 
     _nor_cal.sites.extend([SITES["EPA"], SITES["SF"], SITES["OAK"], SITES["SAC"]])
-    _nola_region.sites.extend([SITES["NOLA"]])
+    # _nola_region.sites.extend([SITES["NOLA"]])
 
     _east_coast.sites.extend([SITES["PGC"]])
     _bay_area.sites.extend([SITES["EPA"], SITES["SF"], SITES["OAK"]])

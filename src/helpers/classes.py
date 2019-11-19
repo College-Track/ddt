@@ -3,6 +3,9 @@ from typing import List
 
 
 class Site:
+    """
+    For individual sites, need the short (ddt purpose) name and the full Salesforce name
+    """
     site_instances = {}
 
     def __init__(self, sf_name, short_name):
@@ -18,6 +21,10 @@ class Site:
 
 
 class Region:
+    """
+    For CT regions. Region needs short (ddt purpose) name and full Salesforce name. 
+    Upon initiation an empty list is created which will then get populated with the region's sites
+    """
     region_instances = []
 
     def __init__(self, region_long, region_short):

@@ -1,6 +1,6 @@
 import pandas as pd
 from pathlib import Path
-from src.helpers.helpers import generate_sites, generate_regions
+from src.helpers.helpers import generate_sites, generate_regions, calculate_region_totals
 
 SITES = generate_sites()
 REGIONS = generate_regions(SITES)
@@ -25,24 +25,13 @@ def create_pivot_table(df, type):
         fill_value=0,
         margins=True,
     )
+    # remove the row sum as it is redundant with the National column
     pivot_table = pivot_table.drop("All", axis=1)
     return pivot_table
 
 
-def calculate_region_totals(df, REGIONS):
-    """Calculates the regional totals for each measure in the given data frame."""
-    for region in REGIONS:
-        df[region.region_short] = 0
-        _sites = [site.short_name for site in region.sites]
-        # removing sites which are instantiated, but no data exist yet
-        _sites_complete = [site for site in _sites if site in list(df.columns)]
 
-        df[region.region_short] = df[_sites_complete].sum(axis=1)
-
-    return df
-
-
-# TODO: Currently is inactive, need to have a better solution
+# TODO: Currently is inactive and manually done below, needs to have a better solution
 def add_subtotals(df):
     tmp_df = df.sum(level=1, axis=0)
     tmp_df.name = "Totals"
@@ -50,6 +39,7 @@ def add_subtotals(df):
     return df.append(tmp_df)
 
 
+# TODO: Refactor
 first_gen_pivot = create_pivot_table(df, "Indicator: First Generation")
 gender_pivot = create_pivot_table(df, "Gender")
 race_pivot = create_pivot_table(df, "Ethnic background")

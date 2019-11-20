@@ -53,6 +53,8 @@ class Sheet:
         self.metric_category = []
         Sheet.sheet_instances.append(self)
 
+    def __repr__(self):
+        return f"Sheet({self.sheet_name})"
 
 class MetricCategory(Sheet):
     """
@@ -70,17 +72,37 @@ class MetricCategory(Sheet):
     def __getattr__(self, attr):
         return getattr(self.sheet, attr)
 
+    def __repr__(self):
+        return f"MetricCategory({self.category_name})"
+
 class Metric(MetricCategory):
     """
     For inidivual metrics assigned to a Metric Category
     """
 
-    def __init__(self, metric_category, metric_name):
+    def __init__(self, metric_category, metric_name, definition="Please provude a definition", additional_content=""):
         self.metric_name = metric_name
         self.metric_category = metric_category
-        self.definition = "Please provide a definition"
-        self.additional_content = ""
+        self.definition = definition
+        self.additional_content = additional_content
+        self.metric_df = None
         metric_category.metrics.append(self)
+        
 
     def __getattr__(self, attr):
         return getattr(self.metric_category,attr)
+
+    def __repr__(self):
+        return f"Metric({self.metric_name, self.metric_category.category_name})"
+
+
+
+class DataFile():
+    data_files = []
+    def __init__(self, name, raw_file, interim_file, test_file=""):
+        self.name = name
+        self.raw_file = raw_file
+        self.interim_file = interim_file
+        self.df = None
+        self.test_file = test_file
+        DataFile.data_files.append(self)

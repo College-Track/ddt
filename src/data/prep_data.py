@@ -1,11 +1,13 @@
 import pandas as pd
 from pathlib import Path
 from dotenv import load_dotenv
-from src.helpers.helpers import generate_sites
+from src.helpers.helpers import generate_sites, generate_date_files
 
 load_dotenv()
 
 SITES = generate_sites()
+data_files = generate_date_files()
+
 
 # Setup paths for reading and writing files
 raw_data = Path(".") / "data" / "raw"
@@ -27,27 +29,28 @@ def update_site_name(df, SITES):
 
 
 # a JSON formatted list with details on each data file to load
-data_files = [
-    {
-        "name": "count_demographics",
-        "raw_file": "student_count_demo_11_7_2019.csv",
-        "df": "",
-        "interim_file": "count_demographics_interim.pkl",
-        "test_file": "count_demographics_interim.csv",
-    }
-]
+# data_files = [
+#     {
+#         "name": "count_demographics",
+#         "raw_file": "student_count_demo_11_7_2019.csv",
+#         "df": "",
+#         "interim_file": "count_demographics_interim.pkl",
+#         "test_file": "count_demographics_interim.csv",
+#     }
+# ]
 
 # loop over all the data files and apply cleaning functions and save as .pickle
 for file in data_files:
-    file["df"] = pd.read_csv(raw_data.joinpath(file["raw_file"]))
+    file.df = pd.read_csv(raw_data.joinpath(file.raw_file))
 
     # creates a data frame with all the sites, used to format the excel document
-    if file["name"] == "count_demographics":
-        sites = pd.DataFrame(file["df"]["Site"].unique())
+    if file.name == "count_demographics":
+        sites = pd.DataFrame(file.df["Site"].unique())
         sites.columns = ["Site"]
 
-    file["df"] = update_site_name(file["df"], SITES)
-    file["df"].to_pickle(interim_data.joinpath(file["interim_file"]))
-    file["df"].to_csv(interim_data.joinpath(file["test_file"]))
+    file.df = update_site_name(file.df, SITES)
+    # TODO: make sure index is working correctly
+    file.df.to_pickle(interim_data.joinpath(file.interim_file))
+    file.df.to_csv(interim_data.joinpath(file.test_file))
     sites.to_pickle(interim_data.joinpath("sites.pkl"))
 

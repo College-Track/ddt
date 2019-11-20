@@ -1,4 +1,4 @@
-from src.helpers.classes import Site, Region
+from src.helpers.classes import Site, Region, DataFile
 
 
 def generate_sites():
@@ -48,3 +48,36 @@ def generate_regions(SITES):
         _national.sites.append(site)
 
     return Region.region_instances
+
+
+def generate_date_files():
+
+    count_demographics = DataFile(
+        "count_demographics",
+         "student_count_demo_11_7_2019.csv",
+         "count_demographics_interim.pkl",
+         "count_demographics_interim.csv",
+         )
+    
+    workshop_attendance = DataFile(
+        "workshop_attendance",
+        "workshop_attendance.csv",
+        "workshop_attendance_interim.pkl",
+        "workshop_attendance_interim.csv"
+
+    )
+    return DataFile.data_files
+
+
+
+def calculate_region_totals(df, REGIONS):
+    """Calculates the regional totals for each measure in the given data frame."""
+    for region in REGIONS:
+        df[region.region_short] = 0
+        _sites = [site.short_name for site in region.sites]
+        # removing sites which are instantiated, but no data exist yet
+        _sites_complete = [site for site in _sites if site in list(df.columns)]
+
+        df[region.region_short] = df[_sites_complete].sum(axis=1)
+
+    return df

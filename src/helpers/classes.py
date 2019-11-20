@@ -6,6 +6,7 @@ class Site:
     """
     For individual sites, need the short (ddt purpose) name and the full Salesforce name
     """
+
     site_instances = {}
 
     def __init__(self, sf_name, short_name):
@@ -25,6 +26,7 @@ class Region:
     For CT regions. Region needs short (ddt purpose) name and full Salesforce name. 
     Upon initiation an empty list is created which will then get populated with the region's sites
     """
+
     region_instances = []
 
     def __init__(self, region_long, region_short):
@@ -39,3 +41,46 @@ class Region:
             f"(region_long={self.region_long!r}, region_short={self.region_short!r})"
         )
 
+
+class Sheet:
+    """
+    For organization purposes to group all metric categories and metrics
+    in a single class
+    """
+    sheet_instances = []
+    def __init__(self, sheet_name):
+        self.sheet_name = sheet_name
+        self.metric_category = []
+        Sheet.sheet_instances.append(self)
+
+
+class MetricCategory(Sheet):
+    """
+    For all grouping of metrics that belong on a single sheet
+    """
+
+    def __init__(self, sheet, category_name, reporting_group, pull_date, next_update):
+        self.sheet = sheet
+        self.category_name = category_name
+        self.reporting_group = reporting_group
+        self.pull_date = pull_date
+        self.next_update = next_update
+        self.metrics = []
+
+    def __getattr__(self, attr):
+        return getattr(self.sheet, attr)
+
+class Metric(MetricCategory):
+    """
+    For inidivual metrics assigned to a Metric Category
+    """
+
+    def __init__(self, metric_category, metric_name):
+        self.metric_name = metric_name
+        self.metric_category = metric_category
+        self.definition = "Please provide a definition"
+        self.additional_content = ""
+        metric_category.metrics.append(self)
+
+    def __getattr__(self, attr):
+        return getattr(self.metric_category,attr)

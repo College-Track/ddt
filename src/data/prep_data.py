@@ -28,16 +28,6 @@ def update_site_name(df, SITES):
     return df
 
 
-# a JSON formatted list with details on each data file to load
-# data_files = [
-#     {
-#         "name": "count_demographics",
-#         "raw_file": "student_count_demo_11_7_2019.csv",
-#         "df": "",
-#         "interim_file": "count_demographics_interim.pkl",
-#         "test_file": "count_demographics_interim.csv",
-#     }
-# ]
 
 # loop over all the data files and apply cleaning functions and save as .pickle
 for file in data_files:

@@ -66,6 +66,13 @@ def generate_date_files():
         "workshop_attendance_interim.csv"
 
     )
+
+    community_service = DataFile(
+        "community_service_all_time",
+        "community_service_all_time.csv",
+        "community_service_all_time_interim.pkl",
+        "community_service_all_time_interim.csv"
+    )
     return DataFile.data_files
 
 

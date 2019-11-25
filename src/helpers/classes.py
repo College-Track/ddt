@@ -1,5 +1,9 @@
 from dataclasses import dataclass, field
 from typing import List
+from salesforce_reporting import Connection, ReportParser
+import pandas as pd
+from pathlib import Path
+
 
 
 class Site:
@@ -108,3 +112,30 @@ class DataFile():
         self.df = None
         self.test_file = test_file
         DataFile.data_files.append(self)
+
+    
+    def load_report(self, sf):
+        report_details = sf.get_report(self.report_id)
+        parser = ReportParser(report_details)
+        report = parser.records_dict()
+        df = pd.DataFrame(report)
+
+        while report_details["allData"] == False:
+            existing_ids = ",".join(list(df["18 Digit ID"]))
+            reportFilter = [
+                {
+                    "value": f"{existing_ids}",
+                    "operator": "notEqual",
+                    "column": "Contact.X18_Digit_ID__c",
+                }
+            ]
+            report_details = sf.get_report(self.report_id, filters=reportFilter)
+            _parser = ReportParser(report_details)
+            _report = _parser.records_dict()
+            _df = pd.DataFrame(_report)
+            df = df.append(_df, ignore_index=True)
+
+        return df
+
+    def write_raw_csv(self, df, raw_data):
+        df.to_csv(raw_data.joinpath(self.raw_file))

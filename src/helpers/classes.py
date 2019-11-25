@@ -68,6 +68,7 @@ class MetricCategory(Sheet):
         self.pull_date = pull_date
         self.next_update = next_update
         self.metrics = []
+        sheet.metric_category.append(self)
 
     def __getattr__(self, attr):
         return getattr(self.sheet, attr)
@@ -99,8 +100,9 @@ class Metric(MetricCategory):
 
 class DataFile():
     data_files = []
-    def __init__(self, name, raw_file, interim_file, test_file=""):
+    def __init__(self, name, report_id, raw_file, interim_file, test_file=""):
         self.name = name
+        self.report_id = report_id
         self.raw_file = raw_file
         self.interim_file = interim_file
         self.df = None

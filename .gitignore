@@ -87,3 +87,10 @@ target/
 
 # Mypy cache
 .mypy_cache/
+
+
+# keeping data folder structure
+
+!data/raw/.gitkeep
+!data/interim/.gitkeep
+!data/processed/.gitkeep

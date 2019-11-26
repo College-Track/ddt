@@ -23,6 +23,7 @@ data_files = generate_date_files()
 
 raw_data = Path(".") / "data" / "raw"
 
+
 def main():
     load_sf_reports(data_files, sf, raw_data)
     prep_data(data_files)

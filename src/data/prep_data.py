@@ -2,6 +2,7 @@ import pandas as pd
 from pathlib import Path
 from dotenv import load_dotenv
 from src.helpers.helpers import generate_sites, generate_date_files
+
 # from src.data.load_data import data_files
 
 load_dotenv()
@@ -28,7 +29,6 @@ def update_site_name(df, SITES):
     return df
 
 
-
 def prep_data(data_files):
     # loop over all the data files and apply cleaning functions and save as .pickle
     for file in data_files:
@@ -43,4 +43,5 @@ def prep_data(data_files):
         # TODO: make sure index is working correctly
         file.df.to_pickle(interim_data.joinpath(file.interim_file))
         file.df.to_csv(interim_data.joinpath(file.test_file))
-        sites.to_pickle(interim_data.joinpath("sites.pkl"))    
+        sites.to_pickle(interim_data.joinpath("sites.pkl"))
+

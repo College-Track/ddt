@@ -7,7 +7,7 @@ from src.helpers.classes import Site, Region, DataFile
 @pytest.fixture
 def site():
     """
-    Returns a test site
+    Returns a test site for Arlen
     """
     arlen = Site("College Track Arlen", "Arlen")
     return arlen
@@ -15,6 +15,7 @@ def site():
 
 @pytest.fixture
 def region():
+    """Returns a test region for Texas"""
     texas = Region("College Track Texas", "TEX")
     return texas
 

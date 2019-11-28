@@ -5,9 +5,9 @@ from src.helpers.helpers import generate_sites, generate_date_files
 
 # from src.data.load_data import data_files
 
-load_dotenv()
+# load_dotenv()
 
-SITES = generate_sites()
+# SITES = generate_sites()
 
 
 # Setup paths for reading and writing files

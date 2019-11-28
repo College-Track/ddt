@@ -36,6 +36,8 @@ def test_region_instantiation(region):
     assert len(Region.region_instances) == 1
 
 
+
+
 def test_site_append_to_region(site, region):
     region.sites.append(site)
 
@@ -43,8 +45,19 @@ def test_site_append_to_region(site, region):
     assert region.sites[0].short_name == "Arlen"
 
 
-#  def test_generate_sites():
-#     sites = helpers.generate_sites()
-#     assert len(sites) == 11
-#     assert type(sites) == dict
-print(Site.site_instances)
+def test_generate_sites():
+    sites = helpers.generate_sites()
+    assert len(sites) == 12
+    assert type(sites) == dict
+    assert sites['PGC'].short_name == "PGC"
+
+def test_generate_regions():
+    sites = helpers.generate_sites()
+    regions = helpers.generate_regions(sites)
+
+    assert len(regions) == 8
+    assert regions[2].region_short == "Nor Cal"
+    assert regions[2].sites[0].short_name == "EPA"
+
+
+

@@ -3,35 +3,32 @@ import os
 from pathlib import Path
 import uuid
 import names
-import random
-from datetime import datetime
+from random import randint
+from datetime import datetime, timedelta
+
 
 # clean demographic data
 
-raw_data = Path("..") / "data" / "raw"
+raw_data = Path(".") / "data" / "raw"
 
 
-df = pd.read_csv(raw_data.joinpath("student_count_demo.csv"))
+df = pd.read_csv(raw_data.joinpath("student_count_demo.csv"), parse_dates=['Birthdate'])
 
+# Converting Birthdate to datetime object in order to randomize it
 
-# Replacing names with random names
-df["Full Name"] = df["Full Name"].apply(lambda x: names.get_full_name())
+df['Birthdate'] = pd.to_datetime(df.Birthdate, errors='coerce')
 
+# Randomizing the birthdate by adding or subtracting 30 days 
+df['Birthdate'] = df.Birthdate.apply(lambda x: x + timedelta(days=randint(-30, 30)))
 
-def genDateOfBirth(number=1):
-    CurrentTime = datetime.now()
-    Year = random.randrange(2000, CurrentTime.year)
-    for item in range(number):
-        yield random.randrange(2000, CurrentTime.year), random.randrange(
-            1, 12
-        ), random.randrange(1, 31)
+# Converting back into the original string format
+df['Birthdate'] = df.Birthdate.dt.strftime("%m/%d/%Y")
 
-
-df["Birthdate"] = df["Birthdate"].apply(
-    lambda x: next(f"{month}/{day}/{year}" for year, month, day in genDateOfBirth())
+# Replacing names with a split up version of 18 Digit ID
+df["Full Name"] = df["18 Digit ID"].apply(
+    lambda x: (" ").join([x[i : i + 9] for i in range(0, len(x), 9)])
 )
 
-df["18 Digit ID"] = df["18 Digit ID"].apply(lambda x: str(uuid.uuid1()))
 
-df.to_csv("test_demo.csv")
+df.to_csv("test/static_data/test_demo.csv")
 

@@ -30,6 +30,7 @@ def update_site_name(df, SITES):
 
 
 def prep_data(data_files):
+
     # loop over all the data files and apply cleaning functions and save as .pickle
     for file in data_files:
         file.df = pd.read_csv(raw_data.joinpath(file.raw_file))

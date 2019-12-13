@@ -130,7 +130,7 @@ def generate_community_service_cumulative(df, student_life):
     
 
 def create_hs_metric_sheet():
-    # instatiate the excel sheet for all of these metrics
+    # instantiate the excel sheet for all of these metrics
     hs_metrics = Sheet("HS Metrics")
     workshop_attendance = create_workshop_attendance_cat(hs_metrics)
     student_life = create_community_service_cat(hs_metrics)

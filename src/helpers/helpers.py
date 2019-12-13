@@ -55,18 +55,17 @@ def generate_date_files():
     count_demographics = DataFile(
         "count_demographics",
         "00O1M000007Qak4UAC",
-         "student_count_demo.csv",
-         "count_demographics_interim.pkl",
-         "count_demographics_interim.csv",
-         )
-    
+        "student_count_demo.csv",
+        "count_demographics_interim.pkl",
+        "count_demographics_interim.csv",
+    )
+
     workshop_attendance = DataFile(
         "workshop_attendance",
         "",
         "workshop_attendance.csv",
         "workshop_attendance_interim.pkl",
-        "workshop_attendance_interim.csv"
-
+        "workshop_attendance_interim.csv",
     )
 
     community_service = DataFile(
@@ -74,10 +73,9 @@ def generate_date_files():
         "",
         "community_service_all_time.csv",
         "community_service_all_time_interim.pkl",
-        "community_service_all_time_interim.csv"
+        "community_service_all_time_interim.csv",
     )
     return DataFile.data_files
-
 
 
 def calculate_region_totals(df, REGIONS):

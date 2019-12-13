@@ -9,9 +9,8 @@ def site():
     """
     Returns a test site for Arlen
     """
- 
+
     arlen = Site("College Track Arlen", "Arlen")
-    
     return arlen
 
 
@@ -36,8 +35,6 @@ def test_region_instantiation(region):
     assert len(Region.region_instances) == 1
 
 
-
-
 def test_site_append_to_region(site, region):
     region.sites.append(site)
 
@@ -49,7 +46,8 @@ def test_generate_sites():
     sites = helpers.generate_sites()
     assert len(sites) == 12
     assert type(sites) == dict
-    assert sites['PGC'].short_name == "PGC"
+    assert sites["PGC"].short_name == "PGC"
+
 
 def test_generate_regions():
     sites = helpers.generate_sites()
@@ -58,6 +56,4 @@ def test_generate_regions():
     assert len(regions) == 8
     assert regions[2].region_short == "Nor Cal"
     assert regions[2].sites[0].short_name == "EPA"
-
-
 
